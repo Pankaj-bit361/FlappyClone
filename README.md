@@ -1,2 +1,0 @@
-# FlappyClone
-Repository for Greta
