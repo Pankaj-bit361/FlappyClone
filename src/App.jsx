@@ -64,7 +64,7 @@ const App = () => {
           <Pipe position={pipe.position} height={pipe.height} isTop={true} />
           <Pipe
             position={pipe.position}
-            height={window.innerHeight - pipe.height - 150}
+            height={window.innerHeight - pipe.height - 200} // Updated to match new GAP_HEIGHT
             isTop={false}
           />
         </div>

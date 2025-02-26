@@ -6,7 +6,8 @@ const PIPE_SPEED = 3;
 const PIPE_SPAWN_RATE = 1500;
 const BIRD_SIZE = 32;
 const PIPE_WIDTH = 64;
-const GAP_HEIGHT = 150;
+// Increased gap height for easier gameplay
+const GAP_HEIGHT = 200;
 
 export const useGameLogic = () => {
   const [birdPosition, setBirdPosition] = useState(300);
@@ -19,8 +20,8 @@ export const useGameLogic = () => {
   const [gameStarted, setGameStarted] = useState(false);
 
   const generatePipe = useCallback(() => {
-    const minHeight = 50;
-    const maxHeight = window.innerHeight - GAP_HEIGHT - 100;
+    const minHeight = 100; // Increased minimum height
+    const maxHeight = window.innerHeight - GAP_HEIGHT - 120; // Adjusted maximum height
     const height = Math.random() * (maxHeight - minHeight) + minHeight;
     return {
       position: window.innerWidth,
@@ -79,7 +80,6 @@ export const useGameLogic = () => {
           .filter((pipe) => pipe.position > -PIPE_WIDTH);
       });
 
-      // Improved collision detection
       pipes.forEach((pipe) => {
         const birdLeft = window.innerWidth * 0.25;
         const birdRight = birdLeft + BIRD_SIZE;
@@ -89,21 +89,17 @@ export const useGameLogic = () => {
         const pipeLeft = pipe.position;
         const pipeRight = pipe.position + PIPE_WIDTH;
         
-        // Check if bird is within pipe's horizontal range
         if (birdRight > pipeLeft && birdLeft < pipeRight) {
-          // Check if bird hits top pipe
           if (birdTop < pipe.height) {
             setIsGameOver(true);
           }
           
-          // Check if bird hits bottom pipe
           const bottomPipeTop = pipe.height + GAP_HEIGHT;
           if (birdBottom > bottomPipeTop) {
             setIsGameOver(true);
           }
         }
 
-        // Update score
         if (!pipe.passed && pipeRight < birdLeft) {
           pipe.passed = true;
           setScore((s) => s + 1);
